@@ -1,22 +1,19 @@
 <template>
-  <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center">
-    <div class="home-card p-5 bg-white rounded elevation-3">
-      <img src="https://bcw.blob.core.windows.net/public/img/8600856373152463" alt="CodeWorks Logo"
-        class="rounded-circle">
-      <h1 class="my-5 bg-dark text-white p-3 rounded text-center">
-        Vue 3 Starter
-      </h1>
-    </div>
-  </div>
+  <form @submit.prevent="searchItem()">
+    <input type="text" v-model="search.query">
+    <button class="btn btn-info">search</button>
+  </form>
 </template>
 
 <script>
-import { onMounted } from "vue";
+import { onMounted, computed, reactive } from "vue";
+import { AppState } from "../AppState";
 import { groceryService } from "../services/GroceryService";
 import { logger } from "../utils/Logger";
 
 export default {
   setup() {
+    const search = reactive({ query: '' })
     onMounted(() => {
       getItems()
     })
@@ -25,18 +22,26 @@ export default {
     async function getItems() {
       try {
         await groceryService.getItems()
-
       } catch (error) {
         logger.error(error.message)
       }
-
     }
 
 
 
+    return {
+      items: computed(() => AppState.groceryItems),
+      search,
+      async searchItem() {
+        try {
+          await groceryService.searchItem(search.query)
+        } catch (error) {
+          logger.error(error.message)
+        }
+      }
 
 
-    return {}
+    }
   }
 }
 </script>
