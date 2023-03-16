@@ -10,8 +10,8 @@ class GroceryService {
   }
 
 
-  async searchItem(query) {
-    const res = await grocerApi.get('/search', { params: { q: query } })
+  async searchItem(body) {
+    const res = await grocerApi.get('/search', { params: { query: body } })
     logger.log(res.data)
     AppState.foundItem = res.data
   }

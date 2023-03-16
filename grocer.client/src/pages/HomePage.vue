@@ -27,18 +27,19 @@ export default {
       }
     }
 
+    async function searchItem() {
+      try {
+        await groceryService.searchItem(search.query)
+      } catch (error) {
+        logger.error(error.message)
+      }
+    }
 
 
     return {
       items: computed(() => AppState.groceryItems),
       search,
-      async searchItem() {
-        try {
-          await groceryService.searchItem(search.query)
-        } catch (error) {
-          logger.error(error.message)
-        }
-      }
+      searchItem
 
 
     }
