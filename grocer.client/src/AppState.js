@@ -8,5 +8,7 @@ export const AppState = reactive({
 
   groceryItems: [],
 
+  foundItem: {}
+
 
 })
