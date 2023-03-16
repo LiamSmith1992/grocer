@@ -12,6 +12,7 @@
 
 <script>
 import { onMounted } from "vue";
+import { groceryService } from "../services/GroceryService";
 import { logger } from "../utils/Logger";
 
 export default {
